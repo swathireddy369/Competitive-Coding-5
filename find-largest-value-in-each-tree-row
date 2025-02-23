@@ -1,0 +1,70 @@
+// Time Complexity :O(n)
+// Space Complexity :O(n)
+// Did this code successfully run on Leetcode :yes
+// Any problem you faced while coding this :no
+
+
+// Your code here along with comments explaining your approach:BFS approach:here i took queue to place each level of elements and while queue is not empty  initialize mac as integer.min for each level,
+//  and take size of queue, itterate those many times to pop elements  and find max of elements for the level as well to put left and right of polling elemnts in =to the stack.
+
+
+class Solution {
+    public List<Integer> largestValues(TreeNode root) {
+       Queue<TreeNode> q=new LinkedList<>();
+        List<Integer> result=new ArrayList<>();
+         if(root == null)return result;
+        q.add(root);
+        while(!q.isEmpty()){
+            int size=q.size();
+             int max=Integer.MIN_VALUE;
+            for(int i=0;i<size;i++){
+                TreeNode current=q.poll();
+                max=Math.max(current.val,max);
+                 if(current.left != null){
+                    q.add(current.left);
+                }
+                   if(current.right != null){
+                    q.add(current.right);
+                }
+
+            }
+            result.add(max);
+        }
+        return result;
+        
+    }
+}
+
+// Time Complexity :O(n)
+// Space Complexity :O(h)->stack space
+// Did this code successfully run on Leetcode :yes
+// Any problem you faced while coding this :no
+
+
+// Your code here along with comments explaining your approach:DFS approach here recursive atck approach where start recursion from root with level as local paramter ,
+// and initailze result list for processing and to return the output. if result list size is equal to level then i add root elemnt to the list if not then replace result(level) element with comparing max between result(level) and current, if root.left and right not null then did recursion for left and right nodes as well.
+
+class Solution {
+    List<Integer> result=new ArrayList<>();
+    int max= Integer.MIN_VALUE;
+    public List<Integer> largestValues(TreeNode root) {
+          dfs(root,0,max);
+         return result;
+        }
+          public void dfs(TreeNode root, int level,int max){
+                  if(root == null)return;
+                 if(result.size() == level){
+                        result.add(root.val);
+                  }
+                 max=Math.max(result.get(level),root.val);
+                 result.set(level,max);
+                 level++;
+                 if(root.left != null){
+                  dfs(root.left,level,max);
+                 }
+                 if(root.right != null){
+                   dfs(root.right,level,max); 
+                 }
+          }
+    
+}
